@@ -11,7 +11,7 @@ void example1()
         fprintf_s(stdout, "[%I64d] YThreadpoolSimpleCallback, thread id : %d\r\n", GetTickCount64(), GetCurrentThreadId());
     });
     
-    YThreadpoolTimer* timerObject = YThreadpoolTimer::Create(nullptr, [](long& counter, PTP_CALLBACK_INSTANCE pci, YThreadpoolTimer* timer)
+    YThreadpoolTimer* timerObject = YThreadpoolTimer::Create(nullptr, [](long& counter, PTP_CALLBACK_INSTANCE, YThreadpoolTimer* timer)
     {
         long count = InterlockedIncrement(&counter);
         fprintf_s(stdout, "[%I64d] YThreadpoolTimer, count : %d, thread id : %d\r\n", GetTickCount64(), count, GetCurrentThreadId());
