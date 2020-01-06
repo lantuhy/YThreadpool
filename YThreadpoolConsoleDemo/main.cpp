@@ -43,7 +43,7 @@ void example1()
 		waitObject->SetWait(hEvent, INFINITE);
 	}
 
-	YThreadpoolTimer* timerObject = YThreadpoolTimer::Create(nullptr, [&](long& counter, PTP_CALLBACK_INSTANCE pci, YThreadpoolTimer* timer)
+	YThreadpoolTimer* timerObject = YThreadpoolTimer::Create(nullptr, [=](long& counter, PTP_CALLBACK_INSTANCE, YThreadpoolTimer* timer)
 	{
 		long count = InterlockedIncrement(&counter);
 		fprintf_s(stdout, "[%I64d] YThreadpoolTimer, count : %d, thread id : %d\r\n", GetTickCount64(), count, GetCurrentThreadId());
@@ -106,7 +106,6 @@ void example3()
 	const int CountOfWorkObjects = 2;
 	const int CountOfInstances = 3;
 	const int N = 1000 * 100;
-	const int M = INT_MAX;
 	// 创建多个工作对象并提交
 	for (int indexOfObject = 1; indexOfObject <= CountOfWorkObjects; ++indexOfObject)
 	{
@@ -117,7 +116,6 @@ void example3()
 			srand((unsigned int)time(nullptr));
 			for (int i = 0; i < N; ++i)
 			{
-				
 				int number = rand() * 100 + indexOfObject * 10 + indexOfInstance;
 				// 在单线程回调环境中访问numbers
 				YThreadpoolSimpleCallback::TrySubmit(singleThreadedEnviron, [=, &numbers](PTP_CALLBACK_INSTANCE)
